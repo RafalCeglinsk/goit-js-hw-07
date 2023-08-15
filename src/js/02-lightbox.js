@@ -22,10 +22,19 @@ function createGalleryItem(item) {
   
     return galleryItem;
 }
-galleryItems.forEach(item => {
+function loadGallery(galleryItems) {
+  const galleryContainer = document.querySelector(".gallery");
+
+  const fragment = new DocumentFragment();
+
+  galleryItems.forEach(item => {
     const galleryItem = createGalleryItem(item);
-    gallery.appendChild(galleryItem);
-});
+    fragment.appendChild(galleryItem);
+  });
+  galleryContainer.appendChild(fragment);
+
+}
+loadGallery(galleryItems);
 
 const lightbox = new SimpleLightbox(".gallery a", {
   captionsData: "alt",
