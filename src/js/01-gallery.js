@@ -1,6 +1,6 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-
+let instance;
 
 const gallery = document.querySelector(".gallery");
 
@@ -45,17 +45,23 @@ gallery.addEventListener("click", (e) => {
     if (!e.target.dataset.source) {
       return;
     }
-    const instance = basicLightbox.create(`<img src="${e.target.dataset.source}" width="800" height="600" alt="${e.target.alt}">` ,
-      {
-        onShow: (instance) => {
-          document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
-              instance.close();
-            }
-            document.removeEventListener("keydown", e);
-          });
-        },
-      }
-    );
+  instance = basicLightbox.create(`<img src="${e.target.dataset.source}" width="800" height="600" alt="${e.target.alt}">`);
 instance.show();
+onShow();
 });
+
+
+function escapePress(e) {
+    if (e.key === "Escape") {
+      instance.close();
+      onHide();
+    }
+  }
+
+function onShow () {
+  document.addEventListener("keydown", escapePress); 
+}
+function onHide() {
+  document.removeEventListener("keydown", escapePress);
+}
+
